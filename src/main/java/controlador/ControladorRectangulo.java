@@ -8,6 +8,8 @@ package controlador;
  *
  * @author USUARIO
  */
+
+import modelo.Punto;
 import modelo.Rectangulo;
 
 public class ControladorRectangulo {
@@ -28,5 +30,14 @@ public class ControladorRectangulo {
 
     public String descripcion() {
         return rectangulo.toString();
+    }
+    public void mover(double dx, double dy) {
+        rectangulo.mover(dx, dy);
+    }
+    public void escalar(double factor) {
+        Punto p1 = rectangulo.getP1();
+        Punto p2 = rectangulo.getP2();
+        p2.setX(p1.getX() + (p2.getX() - p1.getX()) * factor);
+        p2.setY(p1.getY() + (p2.getY() - p1.getY()) * factor);
     }
 }
