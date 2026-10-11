@@ -30,6 +30,9 @@ public class VistaRectangulo extends JFrame implements ActionListener {
     private JTextField txtY2 = new JTextField("3", 5);
     private JButton btnCrear = new JButton("Crear rectángulo");
     private JButton btnArea = new JButton("Calcular área");
+    private JTextField txtDx = new JTextField("1", 5);
+    private JTextField txtDy = new JTextField("1", 5);
+    private JButton btnMover = new JButton("Mover");
     private JLabel lblResultado = new JLabel("Cree un rectángulo para comenzar.");
 
     public VistaRectangulo(ControladorRectangulo controlador) {
@@ -42,11 +45,14 @@ public class VistaRectangulo extends JFrame implements ActionListener {
         panel.add(fila("Vértice 2  x:", txtX2, "y:", txtY2));
         panel.add(btnCrear);
         panel.add(btnArea);
+        panel.add(fila("Mover  dx:", txtDx, "dy:", txtDy));
+        panel.add(btnMover);
         panel.add(lblResultado);
 
         btnCrear.addActionListener(this);
         btnArea.addActionListener(this);
-
+        
+        btnMover.addActionListener(this);
         add(panel);
         pack();
         setLocationRelativeTo(null);
@@ -66,6 +72,10 @@ public class VistaRectangulo extends JFrame implements ActionListener {
             }
             if (e.getSource() == btnArea) {
                 lblResultado.setText("Área = " + controlador.calcularArea());
+            }
+            if (e.getSource() == btnMover) {
+                controlador.mover(numero(txtDx), numero(txtDy));
+                lblResultado.setText("Movido: " + controlador.descripcion());
             }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Ingrese solo números válidos.");
