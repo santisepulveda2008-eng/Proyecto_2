@@ -40,4 +40,13 @@ public class ControladorRectangulo {
         p2.setX(p1.getX() + (p2.getX() - p1.getX()) * factor);
         p2.setY(p1.getY() + (p2.getY() - p1.getY()) * factor);
     }
+    public boolean puntoDentro(double x, double y) {
+        Punto p1 = rectangulo.getP1();
+        Punto p2 = rectangulo.getP2();
+        double xMin = Math.min(p1.getX(), p2.getX());
+        double xMax = Math.max(p1.getX(), p2.getX());
+        double yMin = Math.min(p1.getY(), p2.getY());
+        double yMax = Math.max(p1.getY(), p2.getY());
+        return x >= xMin && x <= xMax && y >= yMin && y <= yMax;
+    }
 }
