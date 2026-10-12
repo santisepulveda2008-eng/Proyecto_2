@@ -33,6 +33,11 @@ public class VistaRectangulo extends JFrame implements ActionListener {
     private JTextField txtDx = new JTextField("1", 5);
     private JTextField txtDy = new JTextField("1", 5);
     private JButton btnMover = new JButton("Mover");
+    private JTextField txtFactor = new JTextField("2", 5);
+    private JButton btnEscalar = new JButton("Escalar");
+    private JTextField txtPx = new JTextField("1", 5);
+    private JTextField txtPy = new JTextField("1", 5);
+    private JButton btnPunto = new JButton("¿Punto dentro?");
     private JLabel lblResultado = new JLabel("Cree un rectángulo para comenzar.");
 
     public VistaRectangulo(ControladorRectangulo controlador) {
@@ -47,12 +52,18 @@ public class VistaRectangulo extends JFrame implements ActionListener {
         panel.add(btnArea);
         panel.add(fila("Mover  dx:", txtDx, "dy:", txtDy));
         panel.add(btnMover);
+        panel.add(fila("Factor:", txtFactor));
+        panel.add(btnEscalar);
+        panel.add(fila("Punto  x:", txtPx, "y:", txtPy));
+        panel.add(btnPunto);
         panel.add(lblResultado);
 
         btnCrear.addActionListener(this);
         btnArea.addActionListener(this);
         
         btnMover.addActionListener(this);
+        btnEscalar.addActionListener(this);
+        btnPunto.addActionListener(this);
         add(panel);
         pack();
         setLocationRelativeTo(null);
@@ -77,6 +88,17 @@ public class VistaRectangulo extends JFrame implements ActionListener {
                 controlador.mover(numero(txtDx), numero(txtDy));
                 lblResultado.setText("Movido: " + controlador.descripcion());
             }
+            if (e.getSource() == btnEscalar) {
+                controlador.escalar(numero(txtFactor));
+                lblResultado.setText("Escalado: " + controlador.descripcion());
+            }
+            if (e.getSource() == btnPunto) {
+                if (controlador.puntoDentro(numero(txtPx), numero(txtPy))) {
+                    lblResultado.setText("El punto está DENTRO del rectángulo.");
+                } else {
+                    lblResultado.setText("El punto está FUERA del rectángulo.");
+                }
+            }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Ingrese solo números válidos.");
         }
@@ -93,5 +115,11 @@ public class VistaRectangulo extends JFrame implements ActionListener {
 
     private double numero(JTextField campo) {
         return Double.parseDouble(campo.getText().trim().replace(',', '.'));
+    }
+    private JPanel fila(String etiqueta, JTextField campo) {
+        JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        p.add(new JLabel(etiqueta));
+        p.add(campo);
+        return p;
     }
 }
